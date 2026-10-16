@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desafío NTICx | Entrenamiento Digital en Educación Física</title>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --secondary: #16a34a;
+      --accent: #f59e0b;
+      --bg-gray: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-gray);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+    }
+
+    /* BARRA SUPERIOR Y ACCIONES */
+    .action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .btn-pdf {
+      background: linear-gradient(135deg, var(--secondary), #15803d);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-pdf:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(22, 163, 74, 0.4);
+    }
+
+    /* CABECERA PRINCIPAL */
+    header {
+      background: linear-gradient(135deg, #0284c7, #16a34a);
+      color: white;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      font-weight: 500;
+    }
+
+    .motto-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-top: 12px;
+      backdrop-filter: blur(5px);
+    }
+
+    /* CAMPOS DE IDENTIFICACIÓN DEL ALUMNO */
+    .student-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      background: var(--bg-gray);
+      padding: 20px;
+      border-radius: 12px;
+      border: 2px dashed var(--primary);
+      margin-bottom: 30px;
+    }
+
+    .info-field {
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    .info-field span {
+      font-weight: normal;
+      border-bottom: 2px solid var(--border);
+      display: inline-block;
+      width: 60%;
+      min-height: 20px;
+    }
+
+    /* TARJETAS DE MÓDULOS DE ACTIVIDADES */
+    .module-card {
+      background: #ffffff;
+      border: 2px solid var(--border);
+      border-left: 6px solid var(--primary);
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 25px;
+      transition: all 0.2s ease;
+    }
+
+    .module-card.accent-border {
+      border-left-color: var(--secondary);
+    }
+
+    .module-card.warning-border {
+      border-left-color: var(--accent);
+    }
+
+    .module-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .module-title {
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+      font-weight: bold;
+    }
+
+    .activity-title {
+      font-weight: bold;
+      margin: 15px 0 8px 0;
+      color: var(--text);
+    }
+
+    /* ESTILOS DE ELEMENTOS PRÁCTICOS */
+    ul, ol {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      background: white;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      color: var(--primary-dark);
+    }
+
+    .fill-space {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      min-height: 40px;
+      margin-top: 5px;
+      padding: 8px;
+    }
+
+    .write-lines {
+      width: 100%;
+      min-height: 80px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 10px;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    /* REGLAS ESPECIALES PARA IMPRESIÓN PDF */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .container {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .action-bar {
+        display: none;
+      }
+
+      header {
+        background: #0284c7 !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .module-card {
+        page-break-inside: avoid;
+        border: 1px solid #cbd5e1 !important;
+        border-left: 6px solid #0284c7 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .write-lines {
+        background: white;
+        border: 1px solid #94a3b8;
+      }
+
+      .btn-pdf {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- BARRA DE ACCIÓN -->
+    <div class="action-bar">
+      <span style="font-weight: bold; color: var(--primary-dark);">⚡ Cuadernillo Pre-Evaluación NTICx</span>
+      <button class="btn-pdf" onclick="window.print()">🖨️ Descargar o Imprimir PDF</button>
+    </div>
+
+    <!-- CABECERA MOTIVADORA -->
+    <header>
+      <h1>🔥 Desafío NTICx: Alto Rendimiento Digital</h1>
+      <p>4° Año — Orientación Educación Física</p>
+      <div class="motto-badge">🏆 "Transformando datos en rendimiento, salud y conocimiento"</div>
+    </header>
+
+    <!-- FICHA DEL ALUMNO -->
+    <div class="student-info">
+      <div class="info-field">Atleta / Estudiante: <span></span></div>
+      <div class="info-field">Curso: <span>4° Año</span></div>
+      <div class="info-field">Fecha: <span></span></div>
+    </div>
+
+    <!-- MÓDULO 1 -->
+    <div class="module-card">
+      <div class="module-header">
+        <span style="font-size: 1.5rem;">💻</span>
+        <h2 class="module-title">Módulo 1: Informática y Computación</h2>
+      </div>
+
+      <div class="activity-title">Actividad 1.1: El camino del Dato a la Información en el Gimnasio</div>
+      <p>Clasifica cada elemento según corresponda (<b>Dato</b>, <b>Información</b>, <b>Hardware</b> o <b>Software</b>):</p>
+      
+      <div style="margin-top: 10px;">
+        <p>1. Un pulsómetro emite la cifra <code>175</code> en la pantalla. ➔ <span style="font-weight: bold;">Respuesta:</span> ___________</p>
+        <p>2. La aplicación <i>Strava</i> genera un gráfico del mapa de calor de tu carrera. ➔ <span style="font-weight: bold;">Respuesta:</span> ___________</p>
+        <p>3. Una balanza de bioimpedancia para medir grasa corporal. ➔ <span style="font-weight: bold;">Respuesta:</span> ___________</p>
+        <p>4. El informe: <i>"Presenta 12% de grasa, en peso óptimo"</i>. ➔ <span style="font-weight: bold;">Respuesta:</span> ___________</p>
+      </div>
+
+      <div class="activity-title" style="margin-top: 20px;">Actividad 1.2: Desafío de Almacenamiento y Formatos</div>
+      <p>Un club organiza sus archivos: 100 fotos <code>.JPG</code> (4 MB c/u), 1 video HD <code>.MP4</code> (2,5 GB) y el escudo vectorial <code>.SVG</code> (300 KB).</p>
+      <ol style="margin-top: 8px;">
+        <li>¿Cuál es el peso total de las 100 fotos en Megabytes (MB)? <div class="fill-space"></div></li>
+        <li>Si queremos imprimir el escudo en una bandera gigante de 10 metros, ¿por qué es mejor usar <code>.SVG</code> antes que <code>.JPG</code>? <div class="fill-space"></div></li>
+        <li>Ordena los tres recursos de <b>menor a mayor peso</b> en disco: <div class="fill-space"></div></li>
+      </ol>
+    </div>
+
+    <!-- MÓDULO 2 -->
+    <div class="module-card accent-border">
+      <div class="module-header">
+        <span style="font-size: 1.5rem;">🌐</span>
+        <h2 class="module-title">Módulo 2: Redes Digitales de Información</h2>
+      </div>
+
+      <div class="activity-title">Actividad 2.1: Cartografía de Redes en un Evento Deportivo</div>
+      <p>Relaciona cada escenario con el tipo de red o protocolo colocando la letra correspondiente:</p>
+      
+      <table>
+        <tr>
+          <th>Escenario Deportivo</th>
+          <th>Tipo de Red / Protocolo</th>
+          <th>Letra</th>
+        </tr>
+        <tr>
+          <td><b>A.</b> Reloj deportivo conectado a banda pectoral vía Bluetooth.</td>
+          <td><b>1.</b> Red LAN (Local Area Network)</td>
+          <td>[ &nbsp; ]</td>
+        </tr>
+        <tr>
+          <td><b>B.</b> Red Wi-Fi de las oficinas administrativas del club.</td>
+          <td><b>2.</b> Protocolo TCP/IP</td>
+          <td>[ &nbsp; ]</td>
+        </tr>
+        <tr>
+          <td><b>C.</b> Transmisión en vivo del maratón a todo el mundo.</td>
+          <td><b>3.</b> Red PAN (Personal Area Network)</td>
+          <td>[ &nbsp; ]</td>
+        </tr>
+        <tr>
+          <td><b>D.</b> Normas que garantizan que los datos viajen sin errores.</td>
+          <td><b>4.</b> Red WAN / Internet público</td>
+          <td>[ &nbsp; ]</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- MÓDULO 3 Y 5 -->
+    <div class="module-card">
+      <div class="module-header">
+        <span style="font-size: 1.5rem;">📊</span>
+        <h2 class="module-title">Módulos 3 y 5: Manejo de Información y Trabajo en la Nube</h2>
+      </div>
+
+      <div class="activity-title">Actividad 3.1: Detective de Fuentes Confiables</div>
+      <p>Menciona 2 razones por las cuales un artículo científico publicado en una revista médica deportiva es más confiable que un video corto de un influencer en redes sociales:</p>
+      <textarea class="write-lines" placeholder="Escribe tus respuestas aquí..."></textarea>
+
+      <div class="activity-title" style="margin-top: 15px;">Actividad 5.1: Gestión de Torneo en la Nube</div>
+      <p>¿Qué ventajas ofrece usar un documento compartido en Google Drive o OneDrive para organizar las Olimpiadas Escolares entre 4 profesores, en lugar de enviarse archivos de Excel por correo?</p>
+      <textarea class="write-lines" placeholder="Explicar la edición en tiempo real y el control de versiones..."></textarea>
+    </div>
+
+    <!-- MÓDULO 4 Y 6 -->
+    <div class="module-card warning-border">
+      <div class="module-header">
+        <span style="font-size: 1.5rem;">🎬</span>
+        <h2 class="module-title">Módulos 4 y 6: Diseño, Imagen e Hipermedia</h2>
+      </div>
+
+      <div class="activity-title">Actividad 4.1: Taller de Infografías e Hipermedia</div>
+      <p>Vas a diseñar una infografía sobre <i>"Hidratación Deportiva"</i>.</p>
+      <ul>
+        <li>¿Por qué se deben usar imágenes sintéticas o vectoriales y textos breves en lugar de párrafos largos?
+          <div class="fill-space"></div>
+        </li>
+        <li>Si la infografía incluye un código QR que abre un video interactivo con botones de selección, ¿es un recurso <b>Multimedia</b> o <b>Hipermedia</b>? Justifica:
+          <div class="fill-space"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- MÓDULO 7 -->
+    <div class="module-card accent-border">
+      <div class="module-header">
+        <span style="font-size: 1.5rem;">🛡️</span>
+        <h2 class="module-title">Módulo 7: Ciudadanía Digital, Seguridad e IA</h2>
+      </div>
+
+      <div class="activity-title">Actividad 7.1: Análisis de Casos Éticos</div>
+      <p><b>Caso A:</b> Se publica un video de un compañero cayéndose en clase con música con Copyright sin su permiso. ¿Qué derechos y aspectos de la huella digital se vulneran?</p>
+      <textarea class="write-lines"></textarea>
+
+      <p style="margin-top: 10px;"><b>Caso B:</b> Recibes un correo pidiendo tus datos bancarios para "cobrar una beca deportiva en 10 minutos". ¿Qué tipo de ataque es y cómo debes actuar?</p>
+      <textarea class="write-lines"></textarea>
+
+      <div class="activity-title" style="margin-top: 15px;">Actividad 7.2: Debate sobre Inteligencia Artificial</div>
+      <p><i>"La Inteligencia Artificial predecirá lesiones, por lo que los preparadores físicos ya no serán necesarios."</i> ¿Estás de acuerdo o en desacuerdo? Argumenta tu postura:</p>
+      <textarea class="write-lines"></textarea>
+    </div>
+
+  </div>
+
+</body>
+</html>
